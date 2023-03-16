@@ -2,7 +2,60 @@
 <odoo>
 
         <!-- Top menu item -->
+
+        <record id="view_advertisement_tree" model="ir.ui.view">
+            <field name="name">real_estate_order.advertisement.tree</field>
+            <field name="model">real_estate.order</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="real_estate_order.advertisement">
+                 <field name="name" string="name" readonly="1"/>
+                    <field name="description" string="Description" />
+                    <field name="postcode" string="Postcode"/>
+                    <field name="expected_price" string="Expected_price"/>
+                    <field name="date_availability" string="Date_availability'" readonly="1"/>
+                    <field name="selling_price" string="Selling_price" />
+                    <field name="bedrooms" string="Bedroom" />
+                    <field name="living_area" string="Living_area"/>
+                    <field name="garden" string="Garden" />
+                    <field name="garden_area"  string="Garden_area"/>
+                    <field name="garden_orientation" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_real_estate_properties_tree" model="ir.ui.view">
+            <field name="name">real_estate_order.advertisement.tree</field>
+            <field name="model">real_estate.order</field>
+            <field name="priority">3</field>
+            <field name="arch" type="xml">
+                <tree string="properties"  >
+                    <field name="name" string="name" />
+                    <field name="description" string="Description" />
+                    <field name="postcode" string="Postcode"/>
+                    <field name="expected_price" string="Expected_price"/>
+                    <field name="date_availability" string="Date_availability'" readonly="1"/>
+                    <field name="selling_price" string="Selling_price" />
+                    <field name="bedrooms" string="Bedroom" />
+                    <field name="living_area" string="Living_area"/>
+                    <field name="garden" string="Garden" />
+                    <field name="garden_area"  string="Garden_area"/>
+                    <field name="garden_orientation" />
+                </tree>
+            </field>
+        </record>
+
         <menuitem id="real_estate_order_menu_root"
             name="real_estate"
-            active="False"
             sequence="30"/>
+
+        <menuitem id="real_estate_menu"
+            name="Advertisement"
+            parent="real_estate_order_menu_root"
+            sequence="1"/>
+
+        <menuitem id="advertisement_menu"
+            name="propertise"
+            parent="real_estate_menu"
+            sequence="3"/>
+</odoo>

@@ -7,7 +7,8 @@
     'category': '',
     'depends': ['sale'],
     'data': [
-
+        'security/ir.model.access.csv',
+        'views/real_estate_order_views.xml',
     ],
     'installable': True,
     'auto_install': False,
