@@ -28,3 +28,4 @@ class RealEstateOrder(models.Model):
     garden = fields.Boolean('Garden')
     garden_area = fields.Integer(string='Garden_area', required=True)
     garden_orientation = fields.Selection([('north', 'North'),('south', 'South'),('west', 'West'),('east','East')])
+    active = fields.Boolean(string='Active')
