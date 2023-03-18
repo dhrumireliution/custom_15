@@ -35,7 +35,7 @@
                             <group>
                                 <field name="expected_price" string="Expected price"/>
                                 <field name="selling_price" string="Selling price"/>
-                                <field name="active" string="Active"/>
+                                <field name="active" string="Active" invisible="1"/>
                             </group>
 
                         </group>
@@ -79,12 +79,79 @@
                     <separator/>
                     <filter name="filter_price" string ="price" domain="[('expected_price','&lt;=','4500000')]"/>
                     <filter name="filter_price" string ="price" domain="[('expected_price','&gt;=','4500000')]"/>
+                    <separator/>
+                    <filter name="filter_archived" string ="Archived" domain="[('active','=','False')]"/>
                     <group expand="0" string="Group By">
                         <filter string="Garden" name="garden" domain="[]" context="{'group_by': 'garden'}"/>
                         <filter string="Garden area" name="garden_area" domain="[]" context="{'group_by': 'garden_area'}"/>
                     </group>
                 </search>
             </field>
+        </record>
+
+        <record id="view_properties_type_tree" model="ir.ui.view">
+            <field name="name">real_estate_order.properties_type.tree</field>
+            <field name="model">real_estate.order</field>
+            <field name="arch" type="xml">
+                <tree string="real_estate_order.properties_type">
+                    <field name="property_type" string="Property type" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_properties_type_form" model="ir.ui.view">
+            <field name="name">real_estate.properties_type.form</field>
+            <field name="model">real_estate.order</field>
+            <field name="arch" type="xml">
+                <form string="real_estate_order.properties_type">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="property_type" string="Property type" />
+                                <field name="postcode" string="Postcode"/>
+                                <field name="date_availability" string="Date availability"/>
+                            </group>
+                            <group>
+                                <field name="expected_price" string="Expected price"/>
+                                <field name="selling_price" string="Selling price"/>
+                                <field name="active" string="Active" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <group>
+                                    <field name="description" string="Description"/>
+                                    <field name="bedrooms" string="Bedroom"/>
+                                    <field name="living_area" string="Living area"/>
+                                    <field name="garden" string="Garden"/>
+                                    <field name="garden_area" string="Garden area"/>
+                                    <field name="garden_orientation" string ="Garden orientation"/>
+                                </group>
+                            </page>
+                            <page string="Other info">
+                                <group>
+                                    <field name="sales_man" string="Salesman"/>
+                                    <field name="buyer" string="Buyer"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="real_estate_order_action_view_properties_type_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="6"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="real_estate_2.view_properties_type_tree"/>
+            <field name="act_window_id" ref="view_properties_type_action"/>
+        </record>
+
+        <record id="real_estate_order_action_view_properties_type_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="7"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="real_estate_2.view_properties_type_form"/>
+            <field name="act_window_id" ref="view_properties_type_action"/>
         </record>
 
         <record id="view_advertisement_action" model="ir.actions.act_window">
@@ -102,7 +169,8 @@
          <!-- Top menu item -->
 
         <menuitem id="real_estate_order_menu_root"
-            name="Real Estate"/>
+            name="Real Estate"
+            web_icon = "real_estate_2,static/description/icon.png"/>
 
         <menuitem id="real_estate_menu"
             name="Advertisement"
@@ -116,7 +184,7 @@
             sequence="2"/>
 
         <menuitem id="real_estate_setting_menu"
-            name="Setting"
+            name="Settings"
             parent="real_estate_2.real_estate_order_menu_root"
             sequence="3"/>
 
