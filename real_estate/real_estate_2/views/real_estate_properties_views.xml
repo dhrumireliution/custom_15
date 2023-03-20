@@ -1,0 +1,51 @@
+ <odoo>
+     <record id="view_property_tree" model="ir.ui.view">
+            <field name="name">real.estate.properties.property.tree</field>
+            <field name="model">real.estate.properties</field>
+            <field name="arch" type="xml">
+                <tree string="real.estate.properties.property">
+                    <field name="name" string="Name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_property_form" model="ir.ui.view">
+            <field name="name">real.estate.properties.property.form</field>
+            <field name="model">real.estate.properties</field>
+            <field name="arch" type="xml">
+                <form string="real.estate.properties.property">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Name" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_property_search" model="ir.ui.view">
+            <field name="name">real.estate.properties.property.search</field>
+            <field name="model">real.estate.properties</field>
+            <field name="arch" type="xml">
+                <search string="real.estate.properties.property">
+                    <field name="name" string="Name" />
+                </search>
+            </field>
+        </record>
+
+        <record id="view_property_action" model="ir.actions.act_window">
+            <field name="name">Property Type</field>
+            <field name="res_model">real.estate.properties</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="real_estate_property_menu"
+            name="Property Type"
+            parent="real_estate_2.real_estate_setting_menu"
+            action="real_estate_2.view_property_action"
+            sequence="5"/>
+
+ </odoo>
+
