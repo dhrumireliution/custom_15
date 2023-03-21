@@ -1,0 +1,50 @@
+<odoo>
+     <record id="view_tags_tree" model="ir.ui.view">
+            <field name="name">real.estate.tags.tags.tree</field>
+            <field name="model">real.estate.tags</field>
+            <field name="arch" type="xml">
+                <tree string="real.estate.tags.tags">
+                    <field name="name" string="Name" />
+                </tree>
+            </field>
+     </record>
+
+    <record id="view_tags_form" model="ir.ui.view">
+            <field name="name">real.estate.tags.tags.form</field>
+            <field name="model">real.estate.tags</field>
+            <field name="arch" type="xml">
+                <form string="real.estate.tags.tags">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Name" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+
+    <record id="view_property_search" model="ir.ui.view">
+            <field name="name">real.estate.tags.tags.search</field>
+            <field name="model">real.estate.tags</field>
+            <field name="arch" type="xml">
+                <search string="real.estate.tags.tags">
+                    <field name="name" string="Name" />
+                </search>
+            </field>
+    </record>
+
+    <record id="view_tags_action" model="ir.actions.act_window">
+            <field name="name">property tags</field>
+            <field name="res_model">real.estate.tags</field>
+            <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="real_estate_property_menu"
+            name="Property Tags"
+            parent="real_estate_2.real_estate_setting_menu"
+            action="real_estate_2.view_tags_action"
+            sequence="2"/>
+
+ </odoo>

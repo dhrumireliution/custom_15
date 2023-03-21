@@ -7,9 +7,9 @@
                     <field name="name" string="Name" />
                 </tree>
             </field>
-        </record>
+     </record>
 
-        <record id="view_property_form" model="ir.ui.view">
+     <record id="view_property_form" model="ir.ui.view">
             <field name="name">real.estate.properties.property.form</field>
             <field name="model">real.estate.properties</field>
             <field name="arch" type="xml">
@@ -23,9 +23,9 @@
                     </sheet>
                 </form>
             </field>
-        </record>
+     </record>
 
-        <record id="view_property_search" model="ir.ui.view">
+     <record id="view_property_search" model="ir.ui.view">
             <field name="name">real.estate.properties.property.search</field>
             <field name="model">real.estate.properties</field>
             <field name="arch" type="xml">
@@ -33,19 +33,24 @@
                     <field name="name" string="Name" />
                 </search>
             </field>
-        </record>
+     </record>
 
-        <record id="view_property_action" model="ir.actions.act_window">
+     <record id="view_property_action" model="ir.actions.act_window">
             <field name="name">Property Type</field>
             <field name="res_model">real.estate.properties</field>
             <field name="view_mode">tree,form</field>
-        </record>
+     </record>
 
-        <menuitem id="real_estate_property_menu"
+     <menuitem id="real_estate_setting_menu"
+            name="Settings"
+            parent="real_estate_2.real_estate_order_menu_root"
+            sequence="2"/>
+
+     <menuitem id="real_estate_property_menu"
             name="Property Type"
             parent="real_estate_2.real_estate_setting_menu"
             action="real_estate_2.view_property_action"
-            sequence="5"/>
+            sequence="1"/>
 
  </odoo>
 

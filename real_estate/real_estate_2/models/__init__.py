@@ -3,3 +3,4 @@
 
 from . import real_estate_order
 from . import real_estate_properties
+from . import real_estate_tags

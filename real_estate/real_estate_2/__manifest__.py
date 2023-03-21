@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'views/real_estate_order_views.xml',
         'views/real_estate_properties_views.xml',
+        'views/real_estate_tags_views.xml',
     ],
     'application': True,
     'installable': True,

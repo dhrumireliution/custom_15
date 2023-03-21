@@ -16,6 +16,7 @@
                     <field name="garden" string="Garden" />
                     <field name="garden_area"  string="Garden area"/>
                     <field name="garden_orientation" string ="Garden orientation"/>
+                    <field name="tags" string="Property Tags" />
                 </tree>
             </field>
         </record>
@@ -26,6 +27,12 @@
             <field name="arch" type="xml">
                 <form string="real_estate_order.advertisement">
                     <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <field name="tags" string="Property Tags"  widget="many2many_tags"/>
+                        </group>
                         <group>
                             <group>
                                 <field name="propertytype" string="Property Type" />
@@ -37,7 +44,6 @@
                                 <field name="selling_price" string="Selling price"/>
                                 <field name="active" string="Active" invisible="1"/>
                             </group>
-
                         </group>
                         <notebook>
                             <page string="Description">
@@ -52,7 +58,7 @@
                             </page>
                             <page string="Other info">
                                 <group>
-                                    <field name="salesman" string="Salesman"/>
+                                    <field name="salesperson" string="Salesperson"/>
                                     <field name="buyer" string="Buyer"/>
                                 </group>
                             </page>
@@ -105,7 +111,8 @@
 
         <menuitem id="real_estate_order_menu_root"
             name="Real Estate"
-            web_icon = "real_estate_2,static/description/icon.png"/>
+            web_icon = "real_estate_2,static/description/icon.png"
+            sequence="0"/>
 
         <menuitem id="real_estate_menu"
             name="Advertisement"
@@ -116,12 +123,5 @@
             name="Properties"
             parent="real_estate_2.real_estate_menu"
             action="real_estate_2.view_advertisement_action"
-            sequence="2"/>
-
-        <menuitem id="real_estate_setting_menu"
-            name="Settings"
-            parent="real_estate_2.real_estate_order_menu_root"
-            sequence="3"/>
-
-
+            sequence="1"/>
 </odoo>

@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_real_estate_order,real_estate.order,model_real_estate_order,,1,1,1,1
 access_real_estate_properties,real.estate.properties,model_real_estate_properties,,1,1,1,1
+access_real_estate_tags,real.estate.tags,model_real_estate_tags,,1,1,1,1
+

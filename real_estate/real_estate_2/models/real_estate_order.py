@@ -29,7 +29,8 @@ class RealEstateOrder(models.Model):
     garden_area = fields.Integer(string='Garden_area', required=False)
     garden_orientation = fields.Selection([('north', 'North'),('south', 'South'),('west', 'West'),('east','East')])
     active = fields.Boolean(string='Active', default=True)
-    property_type = fields.Selection([('house', 'House'),('resort', 'Resort'),('hotel', 'Hotel'),('building','Building')])
     propertytype = fields.Many2one("real.estate.properties", string='Property Type')
-    salesman = fields.Many2one("res.partner",string='Salesman')
-    buyer = fields.Many2one("res.partner",string='Buyer')
+    salesperson = fields.Many2one('res.users',string='Salesperson')
+    buyer = fields.Many2one('res.partner',string='Buyer')
+    tags = fields.Many2many('real.estate.tags',string='Property Tags')
+
