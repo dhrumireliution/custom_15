@@ -62,6 +62,9 @@
                                     <field name="buyer" string="Buyer"/>
                                 </group>
                             </page>
+                            <page string="Offers">
+                                <field name="offer_ids"/>
+                            </page>
                         </notebook>
                     </sheet>
                 </form>

@@ -1,4 +1,4 @@
- <odoo>
+<odoo>
      <record id="view_property_tree" model="ir.ui.view">
             <field name="name">real.estate.properties.property.tree</field>
             <field name="model">real.estate.properties</field>
@@ -53,4 +53,3 @@
             sequence="1"/>
 
  </odoo>
-

@@ -33,4 +33,6 @@ class RealEstateOrder(models.Model):
     salesperson = fields.Many2one('res.users',string='Salesperson')
     buyer = fields.Many2one('res.partner',string='Buyer')
     tags = fields.Many2many('real.estate.tags',string='Property Tags')
+    offer_ids = fields.One2many("real.estate.offers", inverse_name="partner_id")
+    offer_ids = fields.One2many("real.estate.offers", inverse_name="property_id")
 

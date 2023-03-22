@@ -8,9 +8,10 @@
     'depends': ['sale'],
     'data': [
         'security/ir.model.access.csv',
-        'views/real_estate_order_views.xml',
-        'views/real_estate_properties_views.xml',
-        'views/real_estate_tags_views.xml',
+        'view/real_estate_order_views.xml',
+        'view/real_estate_properties_views.xml',
+        'view/real_estate_tags_views.xml',
+        'view/real_estate_offers.xml',
     ],
     'application': True,
     'installable': True,
