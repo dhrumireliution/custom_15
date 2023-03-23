@@ -67,6 +67,12 @@
                             </page>
                         </notebook>
                     </sheet>
+                     <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -100,6 +106,9 @@
                         <filter string="Garden" name="garden" domain="[]" context="{'group_by': 'garden'}"/>
                         <filter string="Garden area" name="garden_area" domain="[]" context="{'group_by': 'garden_area'}"/>
                     </group>
+                     <searchpanel>
+                        <field name="propertytype"/>
+                    </searchpanel>
                 </search>
             </field>
         </record>

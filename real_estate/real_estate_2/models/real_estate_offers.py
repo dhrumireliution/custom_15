@@ -20,3 +20,4 @@ class RealEstateOffers(models.Model):
     status = fields.Selection(copy=False ,selection=[('accepted', 'Accepted'),('refused', 'Refused')])
     partner_id = fields.Many2one("res.partner",required=True)
     property_id = fields.Many2one("real_estate.order", required=True)
+

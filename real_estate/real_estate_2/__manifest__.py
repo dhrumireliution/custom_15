@@ -5,7 +5,7 @@
     'name': 'Real Estate',
     'version': '1.0',
     'category': '',
-    'depends': ['sale'],
+    'depends': ['sale','mail'],
     'data': [
         'security/ir.model.access.csv',
         'view/real_estate_order_views.xml',

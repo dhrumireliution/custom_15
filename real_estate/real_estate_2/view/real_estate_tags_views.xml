@@ -25,7 +25,7 @@
             </field>
     </record>
 
-    <record id="view_property_search" model="ir.ui.view">
+    <record id="view_tags_search" model="ir.ui.view">
             <field name="name">real.estate.tags.tags.search</field>
             <field name="model">real.estate.tags</field>
             <field name="arch" type="xml">
@@ -41,7 +41,7 @@
             <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="real_estate_property_menu"
+    <menuitem id="real_estate_tag_menu"
             name="Property Tags"
             parent="real_estate_2.real_estate_setting_menu"
             action="real_estate_2.view_tags_action"
