@@ -43,7 +43,8 @@
                                 <field name="expected_price" string="Expected price"/>
                                 <field name="selling_price" string="Selling price"/>
                                 <field name="active" string="Active" invisible="1"/>
-                                <field name="best_price"/>
+<!--&lt;!&ndash;                             <field name="best_offer_price"/>-->
+                                <field name="offer_price"/>
                             </group>
                         </group>
                         <notebook>

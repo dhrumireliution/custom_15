@@ -36,8 +36,8 @@ class RealEstateOrder(models.Model):
     buyer = fields.Many2one('res.partner', string='Buyer')
     tags = fields.Many2many('real.estate.tags', string='Property Tags')
     offer_ids = fields.One2many("real.estate.offers", inverse_name="property_id")
-    best_price = fields.Float(string='Best Offer',compute='_compute_best_price' )
-    price = fields.Float(string='Price')
+    offer_price = fields.Float(string='BEST OFFER', compute='_compute_offer_price')
+
 
     @api.onchange('garden')
     def test_real(self):
@@ -58,19 +58,12 @@ class RealEstateOrder(models.Model):
         for record in self:
             record.total = record.garden_area + record.living_area
 
-    @api.depends('price')
-    def _compute_best_price(self):
-        for rec in self:
-            for i in range(len(rec.offer_ids)):
-                for j in range(i + 1, len(rec.offer_ids)):
-                    if rec.offer_ids[i].price > rec.offer_ids[j].price:
-                        rec.best_price = rec.offer_ids[i].price
+    @api.depends('offer_ids.price')
+    def _compute_offer_price(self):
+        for offer in self:
+            offer.offer_price = 0
+            for rec in range(len(offer.offer_ids)):
+                for line in range(rec + 1, len(offer.offer_ids)):
+                    if offer.offer_ids[rec].price < offer.offer_ids[line].price:
+                        offer.offer_price = offer.offer_ids[line].price
 
-#
-#
-# @api.depends('price')
-#     def _compute_offer(self):
-#         for rec in self:
-#             for line in rec.offer_ids:
-#                 if line and line.price > 100000:
-#                     rec.offer = line.price
