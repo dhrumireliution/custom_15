@@ -36,19 +36,35 @@ class RealEstateOrder(models.Model):
     buyer = fields.Many2one('res.partner', string='Buyer')
     tags = fields.Many2many('real.estate.tags', string='Property Tags')
     offer_ids = fields.One2many("real.estate.offers", inverse_name="property_id")
-    offer_price = fields.Float(string='BEST OFFER', compute='_compute_offer_price')
-
+    offer_price = fields.Float(string='Best Offer', compute='_compute_offer_price')
+    state = fields.Selection(
+        [('new', 'New'), ('offer received', 'Offer Received'), ('offer accepted', 'Offer Accepted'), ('sold', 'Sold'),
+         ('canceled', 'Canceled')], default=lambda self: _('new'))
 
     @api.onchange('garden')
     def test_real(self):
         for rec in self:
-            if rec.garden == True:
+            if rec.garden:
                 rec.garden_orientation = "north"
-            if rec.garden == True:
+            if rec.garden:
                 rec.garden_area = 10
             else:
                 rec.garden_area = 0
                 rec.garden_orientation = None
+
+    def action_sold(self):
+        for rec in self:
+            if "canceled" in rec.state:
+                raise UserError("Canceled properties cannot be sold.")
+
+            return self.write({"state": "sold"})
+
+    def action_cancel(self):
+        for rec in self:
+            if "sold" in rec.state:
+                raise UserError("Sold properties cannot be canceled.")
+
+            return self.write({"state": "canceled"})
 
     from odoo import api
     total = fields.Float(compute='_compute_total')
@@ -66,4 +82,3 @@ class RealEstateOrder(models.Model):
                 for line in range(rec + 1, len(offer.offer_ids)):
                     if offer.offer_ids[rec].price < offer.offer_ids[line].price:
                         offer.offer_price = offer.offer_ids[line].price
-

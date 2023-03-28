@@ -21,16 +21,38 @@ class RealEstateOffers(models.Model):
     status = fields.Selection(copy=False, selection=[('accepted', 'Accepted'), ('refused', 'Refused')])
     partner_id = fields.Many2one("res.partner", required=True)
     property_id = fields.Many2one("real_estate.order", required=True)
-    validity_date = fields.Integer(string='Validity', default='7')
-    date_deadline = fields.Date(string='Date Deadline', index=True, default=fields.datetime.now(),
-                                compute='_compute_date', inverse='_inverse_date',store=True)
+    # validity_date = fields.Integer(string='Validity', default='7')
+    # date_deadline = fields.Date(string='Date Deadline', index=True, default=fields.datetime.now(),
+    #                             compute='', inverse='')
+    validity_days = fields.Integer(string='Validity', default='7')
+    # date = fields.Date(string='Date Deadline', default=fields.datetime.now(),
+    #                    compute='_compute_date_deadline', inverse='_inverse_date_deadline')
+    deadline_date = fields.Date(string='Date Deadline',
+                                compute='_compute_date_deadline',inverse='_inverse_date_deadline')
 
-    @api.depends("validity_date")
-    def _compute_date(self):
-        for lead in self:
+    @api.depends('create_date', 'validity_days')
+    def _compute_date_deadline(self):
+        for line in self:
+            if line.create_date:
+                line.deadline_date = line.create_date.date() + timedelta(days=line.validity_days)
+            else:
+                fields.Date.today()
+    @api.depends('create_date', 'deadline_date')
+    def _inverse_date_deadline(self):
+        for rec in self:
+            if rec.create_date:
+                rec.validity_days = (rec.deadline_date - rec.create_date.date()).days
+            else:
+                fields.Date.today()
 
-            lead.date_deadline = lead.create_date + timedelta(days=lead.validity_date)
+    def action_accept(self):
+        for rec in self:
+            if "accepted" in rec.status:
+                return self.write({"status": "accepted"})
 
-    def _inverse_date(self):
-        for lead in self:
-            lead.validity_date = (fields.Datetime.to_datetime(lead.date_deadline) - lead.create_date).days
+
+    def action_refuse(self):
+        for rec in self:
+            if "refused" in rec.status:
+                return self.write({"status": "refused"})
+

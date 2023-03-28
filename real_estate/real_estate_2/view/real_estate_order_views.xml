@@ -17,6 +17,7 @@
                     <field name="garden_area"  string="Garden area"/>
                     <field name="garden_orientation" string ="Garden orientation"/>
                     <field name="tags" string="Property Tags" />
+                    <field name="state" string="Status"/>
                 </tree>
             </field>
         </record>
@@ -26,6 +27,10 @@
             <field name="model">real_estate.order</field>
             <field name="arch" type="xml">
                 <form string="real_estate_order.advertisement">
+                    <header>
+                        <button name="action_sold" type="object" string="SOLD"/>
+                        <button name="action_cancel" type="object" string="CANCEL"/>
+                    </header>
                     <sheet>
                         <h1>
                             <field name="name"/>
@@ -57,6 +62,7 @@
                                     <field name="garden_area" string="Garden area"/>
                                     <field name="garden_orientation" string ="Garden orientation"/>
                                     <field name="total" string="Total area"/>
+                                    <field name="state" string="Status"/>
                                 </group>
                             </page>
                             <page string="Other info">

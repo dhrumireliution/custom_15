@@ -12,6 +12,7 @@ from odoo.tools import float_is_zero, html_keep_url, is_html_empty
 
 from odoo.addons.payment import utils as payment_utils
 
+
 class RealEstateTags(models.Model):
     _name = "real.estate.tags"
     _description = "Real Estate Tags "
