@@ -24,7 +24,7 @@ class RealEstateOrder(models.Model):
     postcode = fields.Char(string='Postcode', required=False)
     date_availability = fields.Date(string='Date_availability', copy=False, required=False, index=True)
     expected_price = fields.Float(string='Expected_price', required=False)
-    selling_price = fields.Float(string='Selling_price', required=False)
+    selling_price = fields.Float(string='Selling_price', required=False, readonly=True)
     bedrooms = fields.Integer(string='Bedroom', required=False)
     living_area = fields.Integer(string='Living_area', required=False)
     garden = fields.Boolean('Garden')
@@ -32,13 +32,13 @@ class RealEstateOrder(models.Model):
     garden_orientation = fields.Selection([('north', 'North'), ('south', 'South'), ('west', 'West'), ('east', 'East')])
     active = fields.Boolean(string='Active', default=True)
     propertytype = fields.Many2one("real.estate.properties", string='Property Type', tracking=True)
-    salesperson = fields.Many2one('res.users', string='Salesperson')
-    buyer = fields.Many2one('res.partner', string='Buyer')
+    salesperson = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)
+    buyer = fields.Many2one('res.partner', string='Buyer', copy=False)
     tags = fields.Many2many('real.estate.tags', string='Property Tags')
     offer_ids = fields.One2many("real.estate.offers", inverse_name="property_id")
-    offer_price = fields.Float(string='Best Offer', compute='_compute_offer_price')
+    offer_price = fields.Float(string='Best Offer', compute='_compute_best_price', store=True)
     state = fields.Selection(
-        [('new', 'New'), ('offer received', 'Offer Received'), ('offer accepted', 'Offer Accepted'), ('sold', 'Sold'),
+        [('new', 'New'), ('offer_received', 'Offer Received'), ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'),
          ('canceled', 'Canceled')], default=lambda self: _('new'))
 
     @api.onchange('garden')
@@ -75,10 +75,16 @@ class RealEstateOrder(models.Model):
             record.total = record.garden_area + record.living_area
 
     @api.depends('offer_ids.price')
-    def _compute_offer_price(self):
+    def _compute_best_price(self):
         for offer in self:
             offer.offer_price = 0
             for rec in range(len(offer.offer_ids)):
                 for line in range(rec + 1, len(offer.offer_ids)):
                     if offer.offer_ids[rec].price < offer.offer_ids[line].price:
                         offer.offer_price = offer.offer_ids[line].price
+
+    # @api.depends("offer_ids.price")
+    # def _compute_best_price(self):
+    #     for prop in self:
+    #         prop.offer_price = max(prop.offer_ids.mapped("price")) if prop.offer_ids else 0.0
+
