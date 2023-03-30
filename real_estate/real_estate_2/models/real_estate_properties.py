@@ -18,6 +18,9 @@ class RealEstateProperties(models.Model):
     _description = "Real Estate Order"
 
     name = fields.Char(string='Name', required=False)
+    _sql_constraints = [
+        ('unique_property_type_name', 'unique (name)', 'property type must be unique.')
+    ]
 
 
 

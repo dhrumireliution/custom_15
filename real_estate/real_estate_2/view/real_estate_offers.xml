@@ -12,8 +12,8 @@
                     <field name="status" string="Status" />
 <!--                    <field name="validity"/>-->
 <!--                    <field name="date_deadline"/>-->
-                    <field name="days"  />
-                    <field name="date_deadline_date"  />
+                    <field name="validity_deadline" />
+                    <field name="last_date" />
                 </tree>
             </field>
      </record>
@@ -26,13 +26,13 @@
                     <sheet>
                         <group>
                             <group>
-                               <field name="price" string="Price" />
+
                                <field name="partner_id" string="Partner" />
                                <field name="status" string="Status" />
 <!--                               <field name="validity_days"/>-->
 <!--                               <field name="deadline"/>-->
-                              <field name="days"  />
-                              <field name="date_deadline_date"  />
+                               <field name="validity_deadline" />
+                               <field name="last_date" />
                             </group>
                         </group>
                     </sheet>

@@ -41,6 +41,13 @@ class RealEstateOrder(models.Model):
         [('new', 'New'), ('offer_received', 'Offer Received'), ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'),
          ('canceled', 'Canceled')], default=lambda self: _('new'))
 
+    # _sql_constraints = [("check_expected_price", "CHECK(expected_price > 0)",
+    #                      "A property expected price must be strictly positive"),
+    #                     ("check_selling_price", "CHECK(selling_price >= 0)",
+    #                      "A property selling price must be positive"),
+    #                     ("check_offer_price", "CHECK(offer_price >= 0)",
+    #                      "An offer price must be strictly positive")]
+
     @api.onchange('garden')
     def test_real(self):
         for rec in self:
@@ -74,17 +81,40 @@ class RealEstateOrder(models.Model):
         for record in self:
             record.total = record.garden_area + record.living_area
 
-    @api.depends('offer_ids.price')
+    @api.depends("offer_ids.price")
     def _compute_best_price(self):
-        for offer in self:
-            offer.offer_price = 0
-            for rec in range(len(offer.offer_ids)):
-                for line in range(rec + 1, len(offer.offer_ids)):
-                    if offer.offer_ids[rec].price < offer.offer_ids[line].price:
-                        offer.offer_price = offer.offer_ids[line].price
+        for rec in self:
+            if rec.offer_ids:
+                rec.offer_price = max(rec.offer_ids.mapped("price"))
 
-    # @api.depends("offer_ids.price")
-    # def _compute_best_price(self):
-    #     for prop in self:
-    #         prop.offer_price = max(prop.offer_ids.mapped("price")) if prop.offer_ids else 0.0
+    @api.constrains('expected_price')
+    def check_expected_price(self):
+        for quant in self:
+            if quant.expected_price and quant.expected_price <= 0:
+                raise ValidationError(
+                    _("A property expected price must be strictly positive"
+                      ))
 
+    @api.constrains('selling_price')
+    def check_selling_price(self):
+        for quant in self:
+            if quant.selling_price and quant.selling_price <= 0:
+                raise ValidationError(
+                    _("A property selling price must be positive"
+                      ))
+
+    @api.constrains('offer_price')
+    def check_offer_price(self):
+        for quant in self:
+            if quant.offer_price and quant.offer_price <= 0:
+                raise ValidationError(
+                    _("An offer price must be strictly positive"
+                      ))
+
+    @api.constrains('selling_price','expected_price')
+    def check_selling_price(self):
+        for quant in self:
+            if quant.selling_price and quant.selling_price <= quant.expected_price * 0.9:
+                raise ValidationError(
+                    _(" the selling price cannot be lower than 90% of the expected price"
+                      ))
