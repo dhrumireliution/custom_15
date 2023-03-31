@@ -18,6 +18,7 @@ class RealEstateOffers(models.Model):
     _name = "real.estate.offers"
     _description = "Real Estate offers "
     _inherit = "real_estate.order"
+    _order = " price desc"
 
     price = fields.Float(string='Price')
     status = fields.Selection(copy=False, selection=[('accepted', 'Accepted'), ('refused', 'Refused')])

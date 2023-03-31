@@ -17,6 +17,7 @@ class RealEstateOrder(models.Model):
     _name = "real_estate.order"
     _inherit = "mail.thread", "mail.activity.mixin"
     _description = "Real Estate Order"
+    _order = " propertytype desc"
 
     name = fields.Char(string='Name', required=False, copy=False, readonly=False, default=lambda self: _('New'),
                        tracking=True)
@@ -39,7 +40,8 @@ class RealEstateOrder(models.Model):
     offer_price = fields.Float(string='Best Offer', compute='_compute_best_price', store=True)
     state = fields.Selection(
         [('new', 'New'), ('offer_received', 'Offer Received'), ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'),
-         ('canceled', 'Canceled')], default=lambda self: _('new'))
+         ('canceled', 'Canceled')], default=lambda self: _('new'), string='Status',
+        tracking=True)
 
     # _sql_constraints = [("check_expected_price", "CHECK(expected_price > 0)",
     #                      "A property expected price must be strictly positive"),
@@ -111,7 +113,7 @@ class RealEstateOrder(models.Model):
                     _("An offer price must be strictly positive"
                       ))
 
-    @api.constrains('selling_price','expected_price')
+    @api.constrains('selling_price', 'expected_price')
     def check_selling_price(self):
         for quant in self:
             if quant.selling_price and quant.selling_price <= quant.expected_price * 0.9:

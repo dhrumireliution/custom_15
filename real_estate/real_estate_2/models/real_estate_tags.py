@@ -16,8 +16,12 @@ from odoo.addons.payment import utils as payment_utils
 class RealEstateTags(models.Model):
     _name = "real.estate.tags"
     _description = "Real Estate Tags "
+    _order = " name desc"
 
     name = fields.Char(string='Name', required=False)
+    color = fields.Integer(string="Color")
+    color2 = fields.Char(string="Color2")
+
     _sql_constraints = [
         ('unique_tag_name', 'unique (name)', 'property tag must be unique.')
     ]

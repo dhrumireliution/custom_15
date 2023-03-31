@@ -5,6 +5,8 @@
             <field name="arch" type="xml">
                 <tree string="real.estate.tags.tags">
                     <field name="name" string="Name" />
+                    <field name="color" widget="color_picker"  />
+                    <field name="color2" widget="color"  />
                 </tree>
             </field>
      </record>
@@ -18,6 +20,10 @@
                         <group>
                             <group>
                                 <field name="name" string="Name" />
+                            </group>
+                            <group>
+                                <field name="color" widget="color_picker"/>
+                                <field name="color2"  widget="color"  />
                             </group>
                         </group>
                     </sheet>

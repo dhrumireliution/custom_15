@@ -16,18 +16,19 @@
                     <field name="garden" string="Garden" />
                     <field name="garden_area"  string="Garden area"/>
                     <field name="garden_orientation" string ="Garden orientation"/>
-                    <field name="tags" string="Property Tags" />
+                    <field name="tags" string="Property Tags" widget="many2many_tags"  options="{'color_field': 'color''}"/>
                     <field name="state" string="Status"/>
                 </tree>
             </field>
         </record>
 
-        <record id="view_advertise_form" model="ir.ui.view">
+    <record id="view_advertise_form" model="ir.ui.view">
             <field name="name">real_estate.form</field>
             <field name="model">real_estate.order</field>
             <field name="arch" type="xml">
                 <form string="real_estate_order.advertisement">
                     <header>
+                        <field name="state" widget="statusbar"/>
                         <button name="action_sold" type="object" string="SOLD"/>
                         <button name="action_cancel" type="object" string="CANCEL"/>
                     </header>
@@ -36,7 +37,7 @@
                             <field name="name"/>
                         </h1>
                         <group>
-                            <field name="tags" string="Property Tags"  widget="many2many_tags"/>
+                            <field name="tags" string="Property Tags"  widget="many2many_tags"  options="{'color_field': 'color'}"/>
                         </group>
                         <group>
                             <group>
@@ -84,7 +85,7 @@
                     </div>
                 </form>
             </field>
-        </record>
+    </record>
 
         <record id="view_advertisement_search" model="ir.ui.view">
             <field name="name">real_estate_order.advertisement.search</field>
