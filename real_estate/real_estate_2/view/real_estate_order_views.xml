@@ -4,20 +4,21 @@
             <field name="name">real_estate_order.advertisement.tree</field>
             <field name="model">real_estate.order</field>
             <field name="arch" type="xml">
-                <tree string="real_estate_order.advertisement">
+                <tree string="real_estate_order.advertisement" decoration-success="state == 'offer_accepted'"  class="font-weight-bold" >
+                    <field name="name" string="Title"/>
                     <field name="propertytype" string="Property Type" decoration-bf="1"/>
-                    <field name="description" string="Description" />
+                    <field name="description" string="Description" invisible="1"/>
                     <field name="postcode" string="Postcode"/>
-                    <field name="expected_price" string="Expected price"/>
-                    <field name="date_availability" string="Date availability" />
-                    <field name="selling_price" string="Selling price" />
-                    <field name="bedrooms" string="Bedroom" />
-                    <field name="living_area" string="Living area"/>
-                    <field name="garden" string="Garden" />
-                    <field name="garden_area"  string="Garden area"/>
-                    <field name="garden_orientation" string ="Garden orientation"/>
                     <field name="tags" string="Property Tags" widget="many2many_tags"  options="{'color_field': 'color''}"/>
-                    <field name="state" string="Status"/>
+                    <field name="bedrooms" string="Bedroom" />
+                    <field name="living_area" string="Living area(sqm)"/>
+                    <field name="expected_price" string="Expected price" />
+                    <field name="date_availability" string="Date availability" invisible="1" />
+                    <field name="selling_price" string="Selling price"/>
+                    <field name="garden" string="Garden" invisible="1" />
+                    <field name="garden_area"  string="Garden area" invisible="1" />
+                    <field name="garden_orientation" string ="Garden orientation" invisible="1" />
+                    <field name="state" string="Status" invisible="1" />
                 </tree>
             </field>
         </record>
@@ -28,8 +29,8 @@
             <field name="arch" type="xml">
                 <form string="real_estate_order.advertisement">
                     <header>
-                        <field name="state" widget="statusbar"/>
-                        <button name="action_sold" type="object" string="SOLD"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
+                        <button name="action_sold" type="object" string="SOLD" states="offer_accepted" />
                         <button name="action_cancel" type="object" string="CANCEL"/>
                     </header>
                     <sheet>
@@ -59,11 +60,10 @@
                                     <field name="description" string="Description"/>
                                     <field name="bedrooms" string="Bedroom"/>
                                     <field name="living_area" string="Living area"/>
-                                    <field name="garden" string="Garden"/>
-                                    <field name="garden_area" string="Garden area"/>
-                                    <field name="garden_orientation" string ="Garden orientation"/>
+                                    <field name="garden" string="Garden" />
+                                    <field name="garden_area" string="Garden area" attrs="{'invisible': [('garden', '=', False)]}"/>
+                                    <field name="garden_orientation" string ="Garden orientation" attrs="{'invisible': [('garden', '=', False)]}" />
                                     <field name="total" string="Total area"/>
-                                    <field name="state" string="Status"/>
                                 </group>
                             </page>
                             <page string="Other info">
@@ -73,7 +73,7 @@
                                 </group>
                             </page>
                             <page string="Offers">
-                                <field name="offer_ids"/>
+                                <field name="offer_ids" attrs="{'readonly': [('state', 'in', ('offer_accepted','sold','Canceled'))]}" />
                             </page>
                         </notebook>
                     </sheet>
@@ -96,10 +96,9 @@
                     <field name="description" string="Description" />
                     <field name="postcode" string="Postcode"/>
                     <field name="expected_price" string="Expected price"/>
-                    <field name="date_availability" string="Date availability" />
                     <field name="selling_price" string="Selling price" />
                     <field name="bedrooms" string="Bedroom" />
-                    <field name="living_area" string="Living area"/>
+                    <field name="living_area" string="Living area"  filter_domain="[('living_area', '>=', self)]"/>
                     <field name="garden" string="Garden" />
                     <field name="garden_area"  string="Garden area"/>
                     <field name="garden_orientation" string ="Garden orientation"/>
@@ -112,6 +111,8 @@
                     <filter name="filter_price" string ="price" domain="[('expected_price','&gt;=','4500000')]"/>
                     <separator/>
                     <filter name="filter_archived" string ="Archived" domain="[('active','=','False')]"/>
+                    <separator/>
+                    <filter name="available" string=" Available" domain="[('state','=','new')]" />
                     <group expand="0" string="Group By">
                         <filter string="Garden" name="garden" domain="[]" context="{'group_by': 'garden'}"/>
                         <filter string="Garden area" name="garden_area" domain="[]" context="{'group_by': 'garden_area'}"/>
@@ -127,6 +128,7 @@
             <field name="name">Properties</field>
             <field name="res_model">real_estate.order</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_date_availability': True}</field>
         </record>
 
 <!--        <&#45;&#45; Top menu item &ndash;&gt;-->

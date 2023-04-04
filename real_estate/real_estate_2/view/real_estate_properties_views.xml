@@ -15,13 +15,21 @@
             <field name="model">real.estate.properties</field>
             <field name="arch" type="xml">
                 <form string="real.estate.properties.property">
-                    <header>
-                        <field name="state" widget="statusbar"/>
-                    </header>
-                    <sheet>
-                        <h1>
+                   <sheet>
+                       <div class="oe_button_box" name="button_box">
+                        <button name="%(real_estate_2.property_offers_action)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-globe icon">
+                            <div class="o_field_widget o_stat_info">
+                                <field name="offer_count" class="o_stat_value"/>
+                                <span class="o_stat_text">Offers</span>
+                            </div>
+                        </button>
+                       </div>
+                       <h1>
                             <field name="name"/>
-                        </h1>
+                       </h1>
                         <notebook>
                             <page  string="properties">
                                 <field name="property_ids">
@@ -33,7 +41,7 @@
                                 </field>
                             </page>
                         </notebook>
-                    </sheet>
+                   </sheet>
                 </form>
             </field>
      </record>

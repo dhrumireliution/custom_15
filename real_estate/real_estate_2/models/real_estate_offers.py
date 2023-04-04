@@ -17,13 +17,15 @@ from odoo.addons.payment import utils as payment_utils
 class RealEstateOffers(models.Model):
     _name = "real.estate.offers"
     _description = "Real Estate offers "
-    _inherit = "real_estate.order"
+    # _inherit = "real_estate.order"
     _order = " price desc"
 
     price = fields.Float(string='Price')
     status = fields.Selection(copy=False, selection=[('accepted', 'Accepted'), ('refused', 'Refused')])
     partner_id = fields.Many2one("res.partner", required=True)
     property_id = fields.Many2one("real_estate.order", required=True)
+    # property_type_id = fields.Many2one("real.estate.properties", related="property_id.property_type_id",
+    #                                    string="Property Type", store=True)
     # days = fields.Integer(string="Validity (days)", default="7")
     #
     # date_deadline_date = fields.Date(string="Deadline", compute="_compute_date_deadline"
@@ -31,6 +33,7 @@ class RealEstateOffers(models.Model):
     validity_deadline = fields.Integer(string="Validity(days)", default="7")
     last_date = fields.Date(string="Deadline", compute="_compute_date_deadline", inverse="_inverse_date_deadline"
                             , default=fields.datetime.now())
+    propertytype = fields.Many2one("real.estate.properties",related='property_id.propertytype')
 
     @api.depends("create_date", "validity_deadline")
     def _compute_date_deadline(self):

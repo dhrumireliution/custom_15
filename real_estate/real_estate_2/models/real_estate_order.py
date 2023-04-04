@@ -19,7 +19,7 @@ class RealEstateOrder(models.Model):
     _description = "Real Estate Order"
     _order = " propertytype desc"
 
-    name = fields.Char(string='Name', required=False, copy=False, readonly=False, default=lambda self: _('New'),
+    name = fields.Char(string='Title', required=False, copy=False, readonly=False, default=lambda self: _('New'),
                        tracking=True)
     description = fields.Text(string='Description', required=False)
     postcode = fields.Char(string='Postcode', required=False)
@@ -27,7 +27,7 @@ class RealEstateOrder(models.Model):
     expected_price = fields.Float(string='Expected_price', required=False)
     selling_price = fields.Float(string='Selling_price', required=False, readonly=True)
     bedrooms = fields.Integer(string='Bedroom', required=False)
-    living_area = fields.Integer(string='Living_area', required=False)
+    living_area = fields.Integer(string='Living_area(sqm)', required=False)
     garden = fields.Boolean('Garden')
     garden_area = fields.Integer(string='Garden_area', required=False)
     garden_orientation = fields.Selection([('north', 'North'), ('south', 'South'), ('west', 'West'), ('east', 'East')])
@@ -120,3 +120,9 @@ class RealEstateOrder(models.Model):
                 raise ValidationError(
                     _(" the selling price cannot be lower than 90% of the expected price"
                       ))
+
+    # def unlink(self):
+    #     for rec in self:
+    #         if {"sold", "offer_accepted"} not in rec.state:
+    #             raise UserError("Only new and canceled properties can be deleted.")
+    #     return super().unlink()

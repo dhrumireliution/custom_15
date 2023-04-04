@@ -1,22 +1,4 @@
 <odoo>
-     <record id="view_offers_tree" model="ir.ui.view">
-            <field name="name">real.estate.offers.tree</field>
-            <field name="model">real.estate.offers</field>
-            <field name="arch" type="xml">
-                <tree string="real.estate.offers"
-                      editable="bottom">
-                    <field name="price" string="Price" />
-                    <field name="partner_id" string="Partner" />
-                    <button name="action_accept"   type="object"  icon="fa-check"/>
-                    <button name="action_refuse"   type="object"  icon="fa-times"/>
-                    <field name="status" string="Status" />
-<!--                    <field name="validity"/>-->
-<!--                    <field name="date_deadline"/>-->
-                    <field name="validity_deadline" />
-                    <field name="last_date" />
-                </tree>
-            </field>
-     </record>
 
     <record id="view_offers_form" model="ir.ui.view">
             <field name="name">real.estate.offers.form</field>
@@ -26,11 +8,8 @@
                     <sheet>
                         <group>
                             <group>
-
                                <field name="partner_id" string="Partner" />
                                <field name="status" string="Status" />
-<!--                               <field name="validity_days"/>-->
-<!--                               <field name="deadline"/>-->
                                <field name="validity_deadline" />
                                <field name="last_date" />
                             </group>
@@ -39,6 +18,26 @@
                 </form>
             </field>
     </record>
+
+    <record id="view_offers_tree" model="ir.ui.view">
+            <field name="name">real.estate.offers.tree</field>
+            <field name="model">real.estate.offers</field>
+            <field name="arch" type="xml">
+                <tree string="real.estate.offers"
+                      editable="bottom"  decoration-success="status == 'accepted'" decoration-danger="status == 'refused'" class="font-weight-bold">
+                    <field name="price" string="Price" />
+                    <field name="partner_id" string="Partner" />
+                    <button name ="action_accept" type="object" icon="fa-check" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}" />
+                    <button name="action_refuse"   type="object"  icon="fa-times" attrs="{'invisible': ['|',('status', '=', 'accepted'),('status', '=', 'refused')]}"/>
+                    <field name="status" string="Status" />
+                    <field name="validity_deadline" />
+                    <field name="last_date" />
+                </tree>
+            </field>
+     </record>
+
+
+
 
     <record id="view_offers_search" model="ir.ui.view">
             <field name="name">real.estate.offers.search</field>
@@ -50,5 +49,12 @@
                    <field name="status" string="Status" />
                 </search>
             </field>
+    </record>
+
+    <record id="property_offers_action" model="ir.actions.act_window">
+            <field name="name">Offers</field>
+            <field name="res_model">real.estate.offers</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('propertytype', '=', active_id)]</field>
     </record>
 </odoo>
