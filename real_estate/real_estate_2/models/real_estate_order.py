@@ -61,6 +61,12 @@ class RealEstateOrder(models.Model):
                 rec.garden_area = 0
                 rec.garden_orientation = None
 
+    # @api.onchange('offer_ids')
+    # def offer_ids(self):
+    #     for rec in self:
+    #         if rec.offer_ids:
+    #             self.write({"status": "offer_received"})
+
     def action_sold(self):
         for rec in self:
             if "canceled" in rec.state:
@@ -121,8 +127,16 @@ class RealEstateOrder(models.Model):
                     _(" the selling price cannot be lower than 90% of the expected price"
                       ))
 
-    # def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_only_if_open(self):
+        for statement in self:
+            if statement.state not in ['new', 'canceled']:
+                raise UserError(
+                    _("Only new and canceled properties can be deleted."))
+
+    # @api.onchange('offer_ids')
+    # def offer(self):
     #     for rec in self:
-    #         if {"sold", "offer_accepted"} not in rec.state:
-    #             raise UserError("Only new and canceled properties can be deleted.")
-    #     return super().unlink()
+    #         if rec.offer_ids:
+    #             rec.write({"state": "offer_received"})
+

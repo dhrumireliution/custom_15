@@ -33,7 +33,7 @@ class RealEstateOffers(models.Model):
     validity_deadline = fields.Integer(string="Validity(days)", default="7")
     last_date = fields.Date(string="Deadline", compute="_compute_date_deadline", inverse="_inverse_date_deadline"
                             , default=fields.datetime.now())
-    propertytype = fields.Many2one("real.estate.properties",related='property_id.propertytype')
+    propertytype = fields.Many2one("real.estate.properties", related='property_id.propertytype')
 
     @api.depends("create_date", "validity_deadline")
     def _compute_date_deadline(self):
@@ -59,3 +59,22 @@ class RealEstateOffers(models.Model):
 
     def action_refuse(self):
         return self.write({"status": "refused"})
+
+    def write(self, vals):
+        # OVERRIDE
+        res = super().write(vals)
+        self.property_id.state = "offer_received"
+        for rec in self:
+            if rec.property_id.offer_price and rec.property_id.offer_price > rec.price:
+                raise UserError(_("The offer must be higher"))
+        return res
+
+    # def write(self, vals):
+    #     # OVERRIDE
+    #     res = super().write(vals)
+    #     self.property_id.write({"state": "offer_received"})
+    #     for rec in self:
+    #         statement = self.env["real_estate.order"].browse('offer_ids')
+    #         if statement.offer_ids.offer_price and statement. offer_ids.offer_price > rec.price:
+    #             raise UserError(_("The offer must be higher"))
+    #     return res
