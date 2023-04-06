@@ -3,4 +3,5 @@ access_real_estate_order,real_estate.order,model_real_estate_order,,1,1,1,1
 access_real_estate_properties,real.estate.properties,model_real_estate_properties,,1,1,1,1
 access_real_estate_tags,real.estate.tags,model_real_estate_tags,,1,1,1,1
 access_real_estate_offers,real.estate.offers,model_real_estate_offers,,1,1,1,1
+access_res_users,res.users,model_res_users,,1,1,1,1
 

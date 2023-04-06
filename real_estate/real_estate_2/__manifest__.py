@@ -12,6 +12,7 @@
         'view/real_estate_properties_views.xml',
         'view/real_estate_tags_views.xml',
         'view/real_estate_offers.xml',
+        'view/res_users.xml',
     ],
     'application': True,
     'installable': True,
