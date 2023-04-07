@@ -4,6 +4,7 @@
     'category': '',
     'depends': ['real_estate_2', 'account', 'mail'],
     'data': [
+            'security/ir.model.access.csv',
         ],
     'application': True,
     'installable': True,
