@@ -69,12 +69,12 @@ class RealEstateOffers(models.Model):
                 raise UserError(_("The offer must be higher"))
         return res
 
-    # def write(self, vals):
+    # def create(self, vals):
     #     # OVERRIDE
-    #     res = super().write(vals)
+    #     res = super().create(vals)
     #     self.property_id.write({"state": "offer_received"})
-    #     for rec in self:
-    #         statement = self.env["real_estate.order"].browse('offer_ids')
-    #         if statement.offer_ids.offer_price and statement. offer_ids.offer_price > rec.price:
-    #             raise UserError(_("The offer must be higher"))
+    #     statement = self.env["real_estate.order"].browse('offer_ids')
+    #     print(statement)
+    #     if statement.offer_price and statement.offer_price > self.price:
+    #         raise UserError(_("The offer must be higher"))
     #     return res

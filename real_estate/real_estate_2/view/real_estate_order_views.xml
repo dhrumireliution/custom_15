@@ -93,14 +93,15 @@
             <field name="name">real_estate.kanban</field>
             <field name="model">real_estate.order</field>
             <field name="arch" type="xml">
-                <kanban >
+                <kanban records_draggable="false">
                     <field name="name" string="Title"/>
                     <field name="propertytype"/>
                     <field name="tags"/>
                     <field name="expected_price"/>
-                    <field name="selling_price"/>
+                    <field name="selling_price" />
                     <field name="offer_price"/>
                     <field name="activity_state"/>
+                    <field name="state"/>
                     <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
                     <templates>
                         <t t-name="kanban-box">
@@ -114,12 +115,20 @@
                                 <div>
                                     <strong>Expected price:<field name="expected_price" widget="monetary"/></strong>
                                 </div>
-                                <div>
-                                    <strong>Selling price:<field name="selling_price" widget="monetary"/></strong>
-                                </div>
-                                <div>
-                                    <strong>Best Offer:<field name="offer_price" widget="monetary" /></strong>
-                                </div>
+                                <t t-if="record.state.raw_value == 'offer_accepted'">
+                                    <div>
+                                        <strong>Selling price:
+                                            <field name="selling_price" widget="monetary"/>
+                                        </strong>
+                                    </div>
+                                </t>
+                                <t t-if="record.state.raw_value == 'offer_received'">
+                                    <div>
+                                        <strong>Best Offer:
+                                            <field name="offer_price" widget="monetary"/>
+                                        </strong>
+                                    </div>
+                                </t>
                             </div>
                         </t>
                     </templates>
@@ -152,7 +161,7 @@
                     <separator/>
                     <filter name="filter_archived" string ="Archived" domain="[('active','=','False')]"/>
                     <separator/>
-                    <filter name="available" string=" Available" domain="[('state','=','new')]" />
+                    <filter name="available" string=" Available" domain="[('state', 'in', ('offer_received','new'))]" />
                     <group expand="0" string="Group By">
                         <filter string="Garden" name="garden" domain="[]" context="{'group_by': 'garden'}"/>
                         <filter string="Garden area" name="garden_area" domain="[]" context="{'group_by': 'garden_area'}"/>
@@ -169,7 +178,7 @@
             <field name="name">Properties</field>
             <field name="res_model">real_estate.order</field>
             <field name="view_mode">tree,form,kanban</field>
-            <field name="context">{'search_default_date_availability': True}</field>
+            <field name="context">{'search_default_propertytype': 1,'search_default_available': 1}</field>
         </record>
 
 <!--        <&#45;&#45; Top menu item &ndash;&gt;-->
