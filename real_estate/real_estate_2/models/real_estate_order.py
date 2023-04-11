@@ -81,7 +81,6 @@ class RealEstateOrder(models.Model):
 
             return self.write({"state": "canceled"})
 
-    from odoo import api
     total = fields.Float(compute='_compute_total')
 
     @api.depends('garden_area', 'living_area')
@@ -139,4 +138,3 @@ class RealEstateOrder(models.Model):
     #     for rec in self:
     #         if rec.offer_ids:
     #             rec.write({"state": "offer_received"})
-

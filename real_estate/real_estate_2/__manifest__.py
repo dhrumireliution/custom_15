@@ -8,6 +8,7 @@
     'depends': ['sale','mail'],
     'data': [
         'security/ir.model.access.csv',
+        'security/real_estate_security.xml',
         'view/real_estate_order_views.xml',
         'view/real_estate_properties_views.xml',
         'view/real_estate_tags_views.xml',

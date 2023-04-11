@@ -9,7 +9,7 @@ import json
 from odoo import api, fields, models, SUPERUSER_ID, _
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.osv import expression
-from odoo.tools import float_is_zero, html_keep_url, is_html_empty
+from odoo.tools import float_is_zero, html_keep_url, is_html_empty, float_compare
 
 from odoo.addons.payment import utils as payment_utils
 
@@ -60,6 +60,7 @@ class RealEstateOffers(models.Model):
     def action_refuse(self):
         return self.write({"status": "refused"})
 
+    @api.model
     def write(self, vals):
         # OVERRIDE
         res = super().write(vals)
@@ -68,13 +69,3 @@ class RealEstateOffers(models.Model):
             if rec.property_id.offer_price and rec.property_id.offer_price > rec.price:
                 raise UserError(_("The offer must be higher"))
         return res
-
-    # def create(self, vals):
-    #     # OVERRIDE
-    #     res = super().create(vals)
-    #     self.property_id.write({"state": "offer_received"})
-    #     statement = self.env["real_estate.order"].browse('offer_ids')
-    #     print(statement)
-    #     if statement.offer_price and statement.offer_price > self.price:
-    #         raise UserError(_("The offer must be higher"))
-    #     return res
