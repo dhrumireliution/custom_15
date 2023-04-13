@@ -12,6 +12,7 @@
                                <field name="status" string="Status" />
                                <field name="validity_deadline" />
                                <field name="last_date" />
+                               <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
                             </group>
                         </group>
                     </sheet>

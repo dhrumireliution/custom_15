@@ -13,13 +13,14 @@
                     <field name="tags" string="Property Tags" widget="many2many_tags"  options="{'color_field': 'color''}"/>
                     <field name="bedrooms" string="Bedroom" />
                     <field name="living_area" string="Living area(sqm)"/>
-                    <field name="expected_price" string="Expected price" />
+                    <field name="expected_price" string="Expected price" avg="Avg Of Expected Price"/>
                     <field name="date_availability" string="Date availability" invisible="1" />
-                    <field name="selling_price" string="Selling price"/>
+                    <field name="selling_price" string="Selling price" sum="Total Of Selling Price"/>
                     <field name="garden" string="Garden" invisible="1" />
                     <field name="garden_area"  string="Garden area" invisible="1" />
                     <field name="garden_orientation" string ="Garden orientation" invisible="1" />
                     <field name="state" string="Status" invisible="1" />
+                    <field name="company_id" groups="base.group_multi_company" optional="show" readonly="1"/>
                 </tree>
             </field>
         </record>
@@ -71,6 +72,7 @@
                                 <group>
                                     <field name="salesperson" string="Salesperson"/>
                                     <field name="buyer" string="Buyer"/>
+                                    <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
                                 </group>
                             </page>
                             <page string="Offers">

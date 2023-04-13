@@ -19,7 +19,7 @@ class RealEstateOrder(models.Model):
     _description = "Real Estate Order"
     _order = " propertytype desc"
 
-    name = fields.Char(string='Title', required=False, copy=False, readonly=False, default=lambda self: _('New'),
+    name = fields.Char(string='Title', required=False, readonly=False, default=lambda self: _('New'),
                        tracking=True)
     description = fields.Text(string='Description', required=False)
     postcode = fields.Char(string='Postcode', required=False)
@@ -42,6 +42,7 @@ class RealEstateOrder(models.Model):
         [('new', 'New'), ('offer_received', 'Offer Received'), ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'),
          ('canceled', 'Canceled')], default=lambda self: _('new'), string='Status',
         tracking=True)
+    company_id = fields.Many2one('res.company', 'Company', required=True, index=True)
 
     # _sql_constraints = [("check_expected_price", "CHECK(expected_price > 0)",
     #                      "A property expected price must be strictly positive"),

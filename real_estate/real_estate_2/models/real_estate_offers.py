@@ -34,6 +34,7 @@ class RealEstateOffers(models.Model):
     last_date = fields.Date(string="Deadline", compute="_compute_date_deadline", inverse="_inverse_date_deadline"
                             , default=fields.datetime.now())
     propertytype = fields.Many2one("real.estate.properties", related='property_id.propertytype')
+    company_id = fields.Many2one(related='property_id.company_id', string='Company', store=True, index=True)
 
     @api.depends("create_date", "validity_deadline")
     def _compute_date_deadline(self):
