@@ -73,4 +73,11 @@
             action="real_estate_2.view_property_action"
             sequence="1"/>
 
+    <menuitem id="estate_create_offers_menu"
+            name="Create Offers"
+            parent="real_estate_2.real_estate_setting_menu"
+            action="real_estate_2.action_create_offers"
+            sequence="3"/>
+
+
  </odoo>
