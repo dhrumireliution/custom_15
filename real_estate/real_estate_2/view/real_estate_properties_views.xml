@@ -15,7 +15,7 @@
             <field name="model">real.estate.properties</field>
             <field name="arch" type="xml">
                 <form string="real.estate.properties.property">
-                   <sheet>
+                    <sheet>
                        <div class="oe_button_box" name="button_box">
                         <button name="%(real_estate_2.property_offers_action)d"
                                 type="action"

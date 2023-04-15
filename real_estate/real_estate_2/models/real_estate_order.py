@@ -21,6 +21,9 @@ class RealEstateOrder(models.Model):
 
     name = fields.Char(string='Title', required=False, readonly=False, default=lambda self: _('New'),
                        tracking=True)
+    reference = fields.Char(string='Order Reference', required=True, copy=False, readonly=True,
+                            index=True, default=lambda self: _('New'))
+
     description = fields.Text(string='Description', required=False)
     postcode = fields.Char(string='Postcode', required=False)
     date_availability = fields.Date(string='Date_availability', copy=False, required=False, index=True)
@@ -139,3 +142,9 @@ class RealEstateOrder(models.Model):
     #     for rec in self:
     #         if rec.offer_ids:
     #             rec.write({"state": "offer_received"})
+    @api.model
+    def create(self, vals):
+        if vals.get('reference', _('New')) == _('New'):
+            vals['reference'] = self.env['ir.sequence'].next_by_code('real_estate.order' or _('New'))
+        res = super(RealEstateOrder,self).create(vals)
+        return res  

@@ -7,9 +7,10 @@
             <form string="Create New Offers">
                 <group class="oe_title">
                     <field name="name" />
+                    <field name="propertytype" string="Property Type" />
                 </group>
                 <footer>
-
+                    <button name="action_create_offers" type="object"  string="Create" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
                 </footer>
             </form>
