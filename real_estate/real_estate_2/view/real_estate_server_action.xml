@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.actions.server" id="demo_real_estate_action">
+            <field name="name">Real Estate Server Action properties</field>
+            <field name="model_id" ref="real_estate_2.model_real_estate_order"/>
+            <field name="state">code</field>
+            <field name="code">action=model.action_real_estate()</field>
+        </record>
+
+        <menuitem id="real_estate_server_action_menu"
+                  name="Server Action"
+                  parent="real_estate_2.real_estate_setting_menu"
+                  action="real_estate_2.demo_real_estate_action"
+                  sequence="5"/>
+    </data>
+</odoo>

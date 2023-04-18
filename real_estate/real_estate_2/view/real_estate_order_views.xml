@@ -54,11 +54,12 @@
                                 <field name="date_availability" string="Date availability"/>
                             </group>
                             <group>
-                                <field name="expected_price" string="Expected price"/>
+                                <field name="expected_price" string="Expected price" groups="base.group_no_one"/>
                                 <field name="selling_price" string="Selling price"/>
                                 <field name="active" string="Active" invisible="1"/>
 <!--&lt;!&ndash;                             <field name="best_offer_price"/>-->
                                 <field name="offer_price"/>
+                                <field name="cancellation_date"/>
                             </group>
                         </group>
                         <notebook>

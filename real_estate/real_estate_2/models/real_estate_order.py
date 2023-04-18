@@ -46,6 +46,7 @@ class RealEstateOrder(models.Model):
          ('canceled', 'Canceled')], default=lambda self: _('new'), string='Status',
         tracking=True)
     company_id = fields.Many2one('res.company', 'Company', required=True, index=True)
+    cancellation_date = fields.Date(string='Cancellation Date ', copy=False, required=False, index=True)
 
     # _sql_constraints = [("check_expected_price", "CHECK(expected_price > 0)",
     #                      "A property expected price must be strictly positive"),
@@ -146,5 +147,57 @@ class RealEstateOrder(models.Model):
     def create(self, vals):
         if vals.get('reference', _('New')) == _('New'):
             vals['reference'] = self.env['ir.sequence'].next_by_code('real_estate.order' or _('New'))
-        res = super(RealEstateOrder,self).create(vals)
-        return res  
+        res = super(RealEstateOrder, self).create(vals)
+        return res
+
+    @api.model
+    def default_get(self, fields):
+        defaults = super(RealEstateOrder, self).default_get(fields)
+        defaults['cancellation_date'] = datetime.now() + timedelta(days=5)
+        return defaults
+
+    @api.model
+    def update_state_cancel(self):
+        expired_contracts = self.search(
+            [('state', 'not in', ['offer_received', 'canceled', 'offer_accepted', 'sold']),
+             ('cancellation_date', '=', fields.Date.today())])
+        expired_contracts.write({'state': 'canceled'})
+
+    def name_get(self):
+        if self._context.get('real_estate_show_buyer_name'):
+            res = []
+            for order in self:
+                name = order.name
+                if order.buyer.name:
+                    name = '%s - %s' % (name, order.buyer.name)
+                res.append((order.id, name))
+            return res
+        return super(RealEstateOrder, self).name_get()
+
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        if self._context.get('sale_show_partner_name'):
+            if operator == 'ilike' and not (name or '').strip():
+                domain = []
+            elif operator in ('ilike', 'like', '=', '=like', '=ilike'):
+                domain = expression.AND([
+                    args or [],
+                    ['|', ('name', operator, name), ('buyer.name', operator, name)]
+                ])
+                return self._search(domain, limit=limit, access_rights_uid=name_get_uid)
+        return super(RealEstateOrder, self)._name_search(name, args=args, operator=operator, limit=limit,
+                                                         name_get_uid=name_get_uid)
+
+    @staticmethod
+    def action_real_estate():
+        print("Button Is Clicked")
+        return {
+            'name': 'Server Action',
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'kanban,tree,form',
+            'domain': [],
+            'res_model': 'real_estate.order',
+            'target': 'current'
+        }
+
