@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+        <record id="email_template_properties_offers" model="mail.template">
+            <field name="name">Properties Offers: Send by email</field>
+            <field name="model_id" ref="real_estate_2.model_real_estate_order"/>
+            <field name="email_from">{{ (object.salesperson.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.buyer.id }}</field>
+            <field name="subject">{{ object.company_id.name }} Properties Offers (Ref {{ object.offer_ids or 'n/a' }})</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear ${object.buyer}
+                        <br/><br/>
+                        Here is you offers with reference ${object.reference}
+                        <br/><br/>
+                        Best Offer : ${object.offer_price}
+                        Property Type : ${object.propertytype}
+                        <br/><br/>
+                        Do not hesitate to contact us if you have any questions.
+                    </p>
+                </div>
+            </field>
+            <field name="report_template" ref="report_property_offers"/>
+            <field name="report_name">Property Offers_{{ (object.reference)
+            </field>
+        </record>
+    </data>
+</odoo>

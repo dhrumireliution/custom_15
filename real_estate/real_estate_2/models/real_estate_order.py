@@ -47,6 +47,7 @@ class RealEstateOrder(models.Model):
         tracking=True)
     company_id = fields.Many2one('res.company', 'Company', required=True, index=True)
     cancellation_date = fields.Date(string='Cancellation Date ', copy=False, required=False, index=True)
+    email = fields.Char(string='Emails')
 
     # _sql_constraints = [("check_expected_price", "CHECK(expected_price > 0)",
     #                      "A property expected price must be strictly positive"),
@@ -201,3 +202,7 @@ class RealEstateOrder(models.Model):
             'target': 'current'
         }
 
+    def action_send_mail(self):
+        templet = self.env.ref('real_estate_2.email_template_properties_offers')
+        for rec in self:
+            templet.send_mail(rec.id)

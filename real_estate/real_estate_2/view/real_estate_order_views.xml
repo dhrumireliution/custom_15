@@ -36,6 +36,7 @@
                         <button name="action_sold" type="object" string="SOLD" states="offer_accepted" />
                         <button name="action_cancel" type="object" string="CANCEL"/>
                         <button name="%(action_create_offers)d" type="action" string="Create offers" class="btn-primary"/>
+                        <button name="action_send_mail" type="object" string="Send Mail" data-hotkey="m" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -60,6 +61,7 @@
 <!--&lt;!&ndash;                             <field name="best_offer_price"/>-->
                                 <field name="offer_price"/>
                                 <field name="cancellation_date"/>
+                                <field name="email"/>
                             </group>
                         </group>
                         <notebook>

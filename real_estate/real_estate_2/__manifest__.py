@@ -14,6 +14,7 @@
         'security/real_estate_security.xml',
         'data/data.xml',
         'data/cron.xml',
+        'data/mail_template.xml',
         'wizard/estate_offer_create_view.xml',
         'view/real_estate_order_views.xml',
         'view/real_estate_properties_views.xml',
