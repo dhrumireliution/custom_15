@@ -35,7 +35,7 @@
                         <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                         <button name="action_sold" type="object" string="SOLD" states="offer_accepted" />
                         <button name="action_cancel" type="object" string="CANCEL"/>
-                        <button name="%(action_create_offers)d" type="action" string="Create offers" class="btn-primary"/>
+                        <button name="%(action_update_offers)d" type="action" string="update offers"  class="btn-primary"/>
                         <button name="action_send_mail" type="object" string="Send Mail" data-hotkey="m" class="oe_highlight"/>
                     </header>
                     <sheet>

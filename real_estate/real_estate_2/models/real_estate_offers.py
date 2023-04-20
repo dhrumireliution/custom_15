@@ -22,7 +22,7 @@ class RealEstateOffers(models.Model):
 
     price = fields.Float(string='Price')
     status = fields.Selection(copy=False, selection=[('accepted', 'Accepted'), ('refused', 'Refused')])
-    partner_id = fields.Many2one("res.partner", required=True)
+    partner_id = fields.Many2one("res.partner",string="Partner", required=True)
     property_id = fields.Many2one("real_estate.order", required=True)
     # property_type_id = fields.Many2one("real.estate.properties", related="property_id.property_type_id",
     #                                    string="Property Type", store=True)

@@ -5,6 +5,7 @@ access_real_estate_tags,real.estate.tags,model_real_estate_tags,,1,1,1,1
 access_real_estate_offers,real.estate.offers,model_real_estate_offers,,1,1,1,1
 access_res_users,res.users,model_res_users,,1,1,1,1
 access_estate_offer_create,estate.offer.create,model_estate_offer_create,,1,1,1,1
+access_estate_update_offer,estate.update.offer,model_estate_update_offer,,1,1,1,1
 
 
 

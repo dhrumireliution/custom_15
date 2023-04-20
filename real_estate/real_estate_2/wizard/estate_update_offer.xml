@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_update_offers_form" model="ir.ui.view">
+        <field name="name">estate.offer.update.form</field>
+        <field name="model">estate.update.offer</field>
+        <field name="arch" type="xml">
+            <form string="Update New Offers">
+                <group class="oe_title">
+                    <field name="offer_id"/>
+                    <field name="date_availability"/>
+                    <field name="expected_price"/>
+                    <field name="selling_price"/>
+                    <field name="bedrooms"/>
+                </group>
+                <footer>
+                    <button name="action_update_offers" type="object" string="Create" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_update_offers" model="ir.actions.act_window">
+        <field name="name">update Offer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">estate.update.offer</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_update_offers_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

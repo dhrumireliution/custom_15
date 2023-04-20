@@ -23,7 +23,7 @@
                 </div>
             </field>
             <field name="report_template" ref="report_property_offers"/>
-            <field name="report_name">Property Offers_{{ (object.reference)
+            <field name="report_name">Property Offers_{{ (object.name)
             </field>
         </record>
     </data>

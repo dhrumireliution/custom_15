@@ -205,4 +205,4 @@ class RealEstateOrder(models.Model):
     def action_send_mail(self):
         templet = self.env.ref('real_estate_2.email_template_properties_offers')
         for rec in self:
-            templet.send_mail(rec.id)
+            templet.send_mail(rec.id,force_send=True)
