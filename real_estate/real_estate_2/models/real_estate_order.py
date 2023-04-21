@@ -49,6 +49,7 @@ class RealEstateOrder(models.Model):
     cancellation_date = fields.Date(string='Cancellation Date ', copy=False, required=False, index=True)
     email = fields.Char(string='Emails')
 
+
     # _sql_constraints = [("check_expected_price", "CHECK(expected_price > 0)",
     #                      "A property expected price must be strictly positive"),
     #                     ("check_selling_price", "CHECK(selling_price >= 0)",
@@ -203,6 +204,27 @@ class RealEstateOrder(models.Model):
         }
 
     def action_send_mail(self):
-        templet = self.env.ref('real_estate_2.email_template_properties_offers')
+        templet = self.env.ref('real_estate_2.email_template_properties_offers_mail')
         for rec in self:
-            templet.send_mail(rec.id,force_send=True)
+            if rec.buyer.email:
+                templet.send_mail(rec.id,force_send=True)
+        ctx = {
+            'default_model': 'real_estate.order',
+            'active_model': 'real_estate.order',
+            'default_res_id': self.ids[0],
+            'default_composition_mode': 'comment',
+            'mark_so_as_sent': True,
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+            'context': ctx,
+        }
+

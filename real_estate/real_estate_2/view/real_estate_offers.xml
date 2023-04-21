@@ -59,3 +59,4 @@
             <field name="domain">[('propertytype', '=', active_id)]</field>
     </record>
 </odoo>
+

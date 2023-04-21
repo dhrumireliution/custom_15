@@ -8,13 +8,28 @@ class EstateUpdateOffer(models.TransientModel):
     _name = 'estate.update.offer'
     _description = " Estate Update Offer"
 
-    # offer_ids = fields.One2many("real_estate.order", inverse_name="property_id")
-    # offer_ids = fields.One2many("real.estate.offers", inverse_name="property_id")
-    offer_id = fields.Many2one('real_estate.order')
-    date_availability = fields.Date(string='Date_availability', copy=False, required=False, index=True)
-    expected_price = fields.Float(string='Expected_price', required=False)
-    selling_price = fields.Float(string='Selling_price', required=False, readonly=True)
-    bedrooms = fields.Integer(string='Bedroom', required=False)
+    tags = fields.Many2many('real.estate.tags', string='Property Tags')
+    buyer = fields.Many2one('res.partner', string='Buyer', copy=False)
 
     def action_update_offers(self):
-       pass
+        active_id = self._context.get('active_id')
+        upd_var = self.env['real_estate.order'].browse(active_id)
+        tag_lst = []
+        for vals in self.tags:
+            tag_lst.append(vals.id)
+        # lst2 = []
+        # for vals2 in self.offer_ids:
+        #     lst2.append((0,0,{
+        #         'price': vals2.price,
+        #         'partner_id': vals2.partner_id.id,
+        #         'status': vals2.status,
+        #         'validity': vals2.validity,
+        #         'date_deadline': vals2.date_deadline,
+        #         'property_id': vals2.property_id
+        #     }))
+        vals = {
+            'buyer': self.buyer.id,
+            'tags': [(6, 0, tag_lst)],
+            # 'offer_ids': lst2
+        }
+        upd_var.update(vals)

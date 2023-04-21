@@ -6,11 +6,8 @@
         <field name="arch" type="xml">
             <form string="Update New Offers">
                 <group class="oe_title">
-                    <field name="offer_id"/>
-                    <field name="date_availability"/>
-                    <field name="expected_price"/>
-                    <field name="selling_price"/>
-                    <field name="bedrooms"/>
+                    <field name="tags"/>
+                    <field name="buyer"/>
                 </group>
                 <footer>
                     <button name="action_update_offers" type="object" string="Create" class="btn-primary"/>
