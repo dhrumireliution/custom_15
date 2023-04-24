@@ -26,4 +26,39 @@
         <field name="view_id" ref="view_update_offers_form"/>
         <field name="target">new</field>
     </record>
+
+
+<!--    <record id="view_property_users_report" model="ir.ui.view">-->
+<!--        <field name="name">Users Report</field>-->
+<!--        <field name="model">users.report</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="Choose your details">-->
+<!--                <group>-->
+<!--                    <group>-->
+<!--                        <field name="price" style="width: 40%%"/>-->
+<!--                        <field name="status"/>-->
+<!--                    </group>-->
+<!--                    <group>-->
+<!--                        <field name="partner_id"/>-->
+<!--                    </group>-->
+<!--                </group>-->
+<!--                <footer>-->
+<!--                    <button name="print_xls_report" string="Print Report" type="object" class="oe_highlight"/>-->
+<!--                    or-->
+<!--                    <button string="Cancel" class="oe_link" special="cancel" groups="base.group_sale_manager"/>-->
+<!--                </footer>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--     <record id="report_property_users_report" model="ir.actions.report">-->
+<!--        <field name="name">Property Users</field>-->
+<!--        <field name="model">users.report</field>-->
+<!--        <field name="report_type">xlsx</field>-->
+<!--        <field name="report_name">property_users.report_property_users_report.xlsx</field>-->
+<!--        <field name="report_file">property_users.report_property_users_report.xlsx</field>-->
+<!--        <field name="attachment_use">False</field>-->
+<!--        <field name="binding_type">report</field>-->
+<!--     </record>-->
+
 </odoo>

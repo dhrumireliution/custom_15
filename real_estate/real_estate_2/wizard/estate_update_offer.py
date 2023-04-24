@@ -33,3 +33,4 @@ class EstateUpdateOffer(models.TransientModel):
             # 'offer_ids': lst2
         }
         upd_var.update(vals)
+
