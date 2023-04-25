@@ -23,6 +23,7 @@
         'view/real_estate_offers.xml',
         'view/res_users.xml',
         'view/real_estate_server_action.xml',
+        'view/sale_order.xml',
         'report/property_offers.xml',
         'report/report.xml',
     ],

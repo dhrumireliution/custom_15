@@ -49,7 +49,6 @@ class RealEstateOrder(models.Model):
     cancellation_date = fields.Date(string='Cancellation Date ', copy=False, required=False, index=True)
     email = fields.Char(string='Emails')
 
-
     # _sql_constraints = [("check_expected_price", "CHECK(expected_price > 0)",
     #                      "A property expected price must be strictly positive"),
     #                     ("check_selling_price", "CHECK(selling_price >= 0)",
@@ -207,7 +206,7 @@ class RealEstateOrder(models.Model):
         templet = self.env.ref('real_estate_2.email_template_properties_offers_mail')
         for rec in self:
             if rec.buyer.email:
-                templet.send_mail(rec.id,force_send=True)
+                templet.send_mail(rec.id, force_send=True)
         ctx = {
             'default_model': 'real_estate.order',
             'active_model': 'real_estate.order',
@@ -228,3 +227,11 @@ class RealEstateOrder(models.Model):
             'context': ctx,
         }
 
+    def action_reset(self):
+        vals = {
+            'name': self.name,
+            'buyer': self.buyer.id,
+            'tags': self.tags,
+            'company_id': self.env.company.id}
+
+        self.env['real_estate.order'].create(vals)
