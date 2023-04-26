@@ -36,8 +36,8 @@
                         <button name="action_sold" type="object" string="SOLD" states="offer_accepted" />
                         <button name="action_cancel" type="object" string="CANCEL"/>
                         <button name="%(action_update_offers)d" type="action" string="update offers"  class="btn-primary"/>
-                        <button name="action_send_mail" type="object" string="Send Mail" data-hotkey="m" class="oe_highlight"/>
-                        <button name="action_reset" type="object" string="RESET"/>
+                        <button name="action_send_mail" type="object" string="Send Mail" data-hotkey="m" class="oe_highlight" states="offer_accepted,sold" />
+                        <button name="action_reset" type="object" string="RESET" states="canceled"  class="oe_highlight"/>
                     </header>
                     <sheet>
                         <div class="oe_title">

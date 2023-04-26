@@ -228,10 +228,14 @@ class RealEstateOrder(models.Model):
         }
 
     def action_reset(self):
-        vals = {
-            'name': self.name,
-            'buyer': self.buyer.id,
-            'tags': self.tags,
-            'company_id': self.env.company.id}
-
-        self.env['real_estate.order'].create(vals)
+        for rec in self:
+            if "canceled" in rec.state:
+                return {
+                    'name': 'Server Action',
+                    'type': 'ir.actions.act_window',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'domain': [],
+                    'res_model': 'real_estate.order',
+                    'target': 'current'
+                }
